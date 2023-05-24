@@ -1,4 +1,4 @@
-package io.debezium;
+package io.debezium.performance.dmt.schema;
 
 
 /**
