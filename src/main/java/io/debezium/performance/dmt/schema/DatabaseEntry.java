@@ -6,15 +6,15 @@ import java.util.Objects;
 public class DatabaseEntry {
 
     private List<DatabaseColumnEntry> columnEntries;
-    private final DatabaseTableMetadata databaseTableMetadata;
+    private final DatabaseTable databaseTableMetadata;
 
-    public DatabaseEntry(List<DatabaseColumnEntry> columnEntries, DatabaseTableMetadata databaseTableMetadata) {
+    public DatabaseEntry(List<DatabaseColumnEntry> columnEntries, DatabaseTable databaseTableMetadata) {
         this.columnEntries = columnEntries;
         this.databaseTableMetadata = databaseTableMetadata;
     }
 
     public DatabaseEntry() {
-        databaseTableMetadata = new DatabaseTableMetadata();
+        databaseTableMetadata = new DatabaseTable();
     }
 
     public List<DatabaseColumnEntry> getColumnEntries() {
@@ -29,21 +29,18 @@ public class DatabaseEntry {
         columnEntries.add(columnEntry);
     }
 
-    public List<DatabaseColumn> getColumns() {
-        return databaseTableMetadata.getColumns();
-    }
-
-    public DatabaseTableMetadata getDatabaseTableMetadata() {
+    public DatabaseTable getDatabaseTableMetadata() {
         return databaseTableMetadata;
     }
+
 
     /**
      * @return DatabaseColumnEntry which is the primary in this DatabaseEntry
      */
     public DatabaseColumnEntry getPrimaryColumnEntry() {
-        DatabaseColumn primaryColumn = databaseTableMetadata.getPrimary();
+        String primaryColumnName = databaseTableMetadata.getPrimary();
         for (DatabaseColumnEntry columnEntry : columnEntries) {
-            if (columnEntry.columnName().equals(primaryColumn.getName())) {
+            if (columnEntry.columnName().equals(primaryColumnName)) {
                 return columnEntry;
             }
         }
