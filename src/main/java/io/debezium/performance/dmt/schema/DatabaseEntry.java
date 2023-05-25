@@ -6,15 +6,15 @@ import java.util.Objects;
 public class DatabaseEntry {
 
     private List<DatabaseColumnEntry> columnEntries;
-    private final DatabaseTableMetadata databaseTableMetadata;
+    private final DatabaseTable databaseTable;
 
-    public DatabaseEntry(List<DatabaseColumnEntry> columnEntries, DatabaseTableMetadata databaseTableMetadata) {
+    public DatabaseEntry(List<DatabaseColumnEntry> columnEntries, DatabaseTable databaseTable) {
         this.columnEntries = columnEntries;
-        this.databaseTableMetadata = databaseTableMetadata;
+        this.databaseTable = databaseTable;
     }
 
     public DatabaseEntry() {
-        databaseTableMetadata = new DatabaseTableMetadata();
+        databaseTable = new DatabaseTable();
     }
 
     public List<DatabaseColumnEntry> getColumnEntries() {
@@ -29,21 +29,18 @@ public class DatabaseEntry {
         columnEntries.add(columnEntry);
     }
 
-    public List<DatabaseColumn> getColumns() {
-        return databaseTableMetadata.getColumns();
+    public DatabaseTable getDatabaseTable() {
+        return databaseTable;
     }
 
-    public DatabaseTableMetadata getDatabaseTableMetadata() {
-        return databaseTableMetadata;
-    }
 
     /**
      * @return DatabaseColumnEntry which is the primary in this DatabaseEntry
      */
     public DatabaseColumnEntry getPrimaryColumnEntry() {
-        DatabaseColumn primaryColumn = databaseTableMetadata.getPrimary();
+        String primaryColumnName = databaseTable.getPrimary();
         for (DatabaseColumnEntry columnEntry : columnEntries) {
-            if (columnEntry.columnName().equals(primaryColumn.getName())) {
+            if (columnEntry.columnName().equals(primaryColumnName)) {
                 return columnEntry;
             }
         }
@@ -54,7 +51,7 @@ public class DatabaseEntry {
     public String toString() {
         return "DatabaseEntity{" +
                 "columnEntries=" + columnEntries +
-                ", databaseTable=" + databaseTableMetadata +
+                ", databaseTable=" + databaseTable +
                 '}';
     }
 
