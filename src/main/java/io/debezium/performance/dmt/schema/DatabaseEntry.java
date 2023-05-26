@@ -1,6 +1,8 @@
 package io.debezium.performance.dmt.schema;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,11 @@ public class DatabaseEntry {
         columnEntries = new ArrayList<>();
     }
 
+    public DatabaseEntry() {
+        this.name = "UNDEFINED";
+        this.primary = "UNDEFINED";
+        columnEntries = new ArrayList<>();
+    }
 
     public List<DatabaseColumnEntry> getColumnEntries() {
         return columnEntries;
@@ -92,5 +99,9 @@ public class DatabaseEntry {
     @Override
     public int hashCode() {
         return Objects.hash(columnEntries);
+    }
+
+    public String toJsonString() throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(this);
     }
 }

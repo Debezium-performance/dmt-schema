@@ -13,6 +13,12 @@ public final class DatabaseColumnEntry {
         this.dataType = dataType;
     }
 
+    public DatabaseColumnEntry() {
+        this.value = "UNDEFINED";
+        this.columnName = "UNDEFINED";
+        this.dataType = "UNDEFINED";
+    }
+
     public String getValue() {
         return value;
     }
