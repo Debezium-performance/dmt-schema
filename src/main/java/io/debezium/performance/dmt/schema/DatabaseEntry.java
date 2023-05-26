@@ -1,21 +1,29 @@
 package io.debezium.performance.dmt.schema;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class DatabaseEntry {
 
     private List<DatabaseColumnEntry> columnEntries;
-    private final DatabaseTable databaseTable;
+    private String name;
+    private String primary;
 
-    public DatabaseEntry(List<DatabaseColumnEntry> columnEntries, DatabaseTable databaseTable) {
+    public DatabaseEntry(List<DatabaseColumnEntry> columnEntries, String name, String primary) {
         this.columnEntries = columnEntries;
-        this.databaseTable = databaseTable;
+        this.name = name;
+        this.primary = primary;
     }
 
-    public DatabaseEntry() {
-        databaseTable = new DatabaseTable();
+    public DatabaseEntry(String name, String primary) {
+        this.name = name;
+        this.primary = primary;
+        columnEntries = new ArrayList<>();
     }
+
 
     public List<DatabaseColumnEntry> getColumnEntries() {
         return columnEntries;
@@ -25,20 +33,33 @@ public class DatabaseEntry {
         this.columnEntries = columnEntries;
     }
 
-    public void addColumnEntry(DatabaseColumnEntry columnEntry) {
-        columnEntries.add(columnEntry);
+    public String getName() {
+        return name;
     }
 
-    public DatabaseTable getDatabaseTable() {
-        return databaseTable;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrimary() {
+        return primary;
+    }
+
+    public void setPrimary(String primary) {
+        this.primary = primary;
+    }
+
+    public void addColumnEntry(DatabaseColumnEntry columnEntry) {
+        columnEntries.add(columnEntry);
     }
 
 
     /**
      * @return DatabaseColumnEntry which is the primary in this DatabaseEntry
      */
+    @JsonIgnore
     public DatabaseColumnEntry getPrimaryColumnEntry() {
-        String primaryColumnName = databaseTable.getPrimary();
+        String primaryColumnName = getPrimary();
         for (DatabaseColumnEntry columnEntry : columnEntries) {
             if (columnEntry.columnName().equals(primaryColumnName)) {
                 return columnEntry;
@@ -49,9 +70,10 @@ public class DatabaseEntry {
 
     @Override
     public String toString() {
-        return "DatabaseEntity{" +
+        return "DatabaseEntry{" +
                 "columnEntries=" + columnEntries +
-                ", databaseTable=" + databaseTable +
+                ", name='" + name + '\'' +
+                ", primary='" + primary + '\'' +
                 '}';
     }
 
