@@ -2,7 +2,40 @@ package io.debezium.performance.dmt.schema;
 
 import java.util.Objects;
 
-public record DatabaseColumnEntry(String value, String columnName, String dataType) {
+public final class DatabaseColumnEntry {
+    private String value;
+    private String columnName;
+    private String dataType;
+
+    public DatabaseColumnEntry(String value, String columnName, String dataType) {
+        this.value = value;
+        this.columnName = columnName;
+        this.dataType = dataType;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
+    }
 
     @Override
     public String toString() {
@@ -29,4 +62,17 @@ public record DatabaseColumnEntry(String value, String columnName, String dataTy
     public int hashCode() {
         return Objects.hash(value, columnName, dataType);
     }
+
+    public String value() {
+        return value;
+    }
+
+    public String columnName() {
+        return columnName;
+    }
+
+    public String dataType() {
+        return dataType;
+    }
+
 }
