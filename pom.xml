@@ -6,7 +6,7 @@
 
     <groupId>io.debezium.performance</groupId>
     <artifactId>dmt-schema</artifactId>
-    <version>0.2.1-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <name>dmt-schema</name>
     <description>Library with dmt objects representing database entries (rows)</description>
 
